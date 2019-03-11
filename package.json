@@ -1,0 +1,27 @@
+{
+  "name": "babel-plugin-import-antd-async",
+  "version": "1.0.0",
+  "description": "import antd component async,thanks to babel-plugin-import",
+  "scripts": {
+    "test": "mocha --require @babel/register test/index.js",
+    "build": "babel src --out-dir lib",
+    "build-test": "yarn run build && yarn test",
+    "start": "yarn run build-test"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/helper-plugin-utils": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/helper-plugin-test-runner": "^7.1.0",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
+    "mocha": "^6.0.2"
+  }
+}
