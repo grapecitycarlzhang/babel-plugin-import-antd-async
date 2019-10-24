@@ -80,9 +80,20 @@ export default declare((api, options) => {
     }
   }
 
-  function formatComments(spec, async) {
+  function formatComments(spec, async, index, specs) {
+
+    var leadingComments = [];
     if (spec.leadingComments && spec.leadingComments.length > 0) {
-      var comments = spec.leadingComments
+      leadingComments = spec.leadingComments;
+    } else if(index > 0) {
+      var trailingComments = specs[index - 1].trailingComments;
+      if (trailingComments && trailingComments.length > 0) {
+        leadingComments = trailingComments;
+      }
+    }
+
+    if (leadingComments && leadingComments.length > 0) {
+      var comments = leadingComments
         .filter(c => c.type === 'CommentBlock' &&
           c.value.includes('sync-'))
         .map(c => (c.value = c.value.replace(/^\/\*|\*\/$/gm, '').trim(), c))
@@ -166,12 +177,12 @@ export default declare((api, options) => {
 
         if (value === libraryName) {
           const asts = initAsts();
-          node.specifiers.forEach(spec => {
+          node.specifiers.forEach((spec, index, specs) => {
             if (t.isImportSpecifier(spec)) {
 
               const path = `${libraryName}/${libraryDirectory}/${camel2Dash(spec.imported.name)}`;
 
-              var [statics, isAsync] = formatComments(spec, async);
+              var [statics, isAsync] = formatComments(spec, async, index, specs);
 
               asts.push(isAsync ? buildAsyncAst(spec, path, statics) : buildSyncAst(spec, path));
 

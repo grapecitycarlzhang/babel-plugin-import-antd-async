@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-import-antd-async",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "import antd component async,thanks to babel-plugin-import",
   "scripts": {
     "test": "mocha --require @babel/register test/index.js",
